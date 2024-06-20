@@ -1,0 +1,78 @@
+﻿@model IEnumerable<LIEA_System.Models.Venta>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="alert alert-secondary text-center">Ventas Realizadas</h1>
+<div class="float-lg-start">
+    <p>
+        <a asp-action="Create" class="btn btn-outline-secondary">Realizar nueva Venta</a>
+    </p>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha_Venta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hora_Venta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha_Venta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hora_Venta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cliente.Id_Cliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <!--
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id_Venta">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id_Venta">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id_Venta">Delete</a>
+            </td>
+                -->
+        </tr>
+}
+    </tbody>
+</table>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <!--Scrip de agregar-->
+    <script>
+        var agregar = '@TempData["Agregar"]';
+        //var mensaje = '@ViewBag.Mensaje';
+        if (agregar) {
+            Swal.fire({
+                position: "center",
+                icon: "info",
+                title: agregar,
+                text: " Gracias por su compra vuelva pronto",
+                showConfirmButton: false,
+                timer: 2500
+            });
+        }
+    </script>
+    
+}

@@ -1,0 +1,124 @@
+﻿@model IEnumerable<LIEA_System.Models.Proveedor>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="alert alert-dark text-center">Proveedores</h1>
+
+<div class="row">
+    <p>
+        <a asp-action="Create" class="btn btn-outline-success">Agregar Proveedor</a>
+    </p>
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Domicilio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CorreoElectronico)
+            </th>
+            <th>
+                Actualizar
+            </th>
+            <th>
+                Eliminar
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Domicilio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CorreoElectronico)
+            </td>
+            <td>
+                 <a asp-action="Edit" asp-route-id="@item.Id_Proveedor" class="btn btn-outline-info">Actualizar</a>
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.Id_Proveedor" class="btn btn-outline-danger">Eliminar</a>
+            </td>
+
+        </tr>
+}
+    </tbody>
+</table>
+
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <!--Scrip de agregar-->
+    <script>
+        var agregar = '@TempData["Agregar"]';
+        //var mensaje = '@ViewBag.Mensaje';
+        if (agregar) {
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: agregar,
+                text: "Proveedor agregado con exito",
+                showConfirmButton: false,
+                timer: 2500
+            });
+        }
+    </script>
+    <script>
+        var elimina = '@TempData["Eliminar"]';
+        //var mensaje = '@ViewBag.Mensaje';
+        if (elimina) {
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: elimina,
+                text: "Se ha eliminado correctamente el Proveedor",
+                showConfirmButton: false,
+                timer: 2500
+            });
+        }
+    </script>
+    <script>
+        var actualizado = '@TempData["Actualizado"]';
+        //var mensaje = '@ViewBag.Mensaje';
+        if (actualizado) {
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: actualizado,
+                text: "Los cambios se han aplicado exitosamente",
+                showConfirmButton: false,
+                timer: 2500
+            });
+        }
+    </script>
+}

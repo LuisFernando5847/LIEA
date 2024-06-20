@@ -1,0 +1,150 @@
+﻿@model IEnumerable<LIEA_System.Models.Producto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3 class="alert alert-dark text-center">Productos en almacen</h3>
+<div class="row">
+    <p>
+        <a asp-action="Create" class="btn btn-outline-success">Agregar Producto</a>
+    </p>
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genero)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Talla)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Color)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Modelo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Existencias)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Imagen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Proveedor)
+            </th>
+            <th>
+                Editar
+            </th>
+            <th>
+                Eliminar
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Talla)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Color)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Modelo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Existencias)
+            </td>
+            <td>
+                <img src="data:image;base64, @Convert.ToBase64String(item.Imagen)" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Proveedor.Id_Proveedor)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id_Producto" class="btn btn-outline-warning">Editar</a>                
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.Id_Producto" class="btn btn-outline-danger">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <!--Scrip de agregar-->
+    <script>
+        var agregar = '@TempData["Agregar"]';
+        //var mensaje = '@ViewBag.Mensaje';
+        if (agregar) {
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: agregar,
+                text: "Producto agregado con exito",
+                showConfirmButton: false,
+                timer: 2500
+            });
+        }
+    </script>
+    <script>
+        var elimina = '@TempData["Eliminar"]';
+        //var mensaje = '@ViewBag.Mensaje';
+        if (elimina) {
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: elimina,
+                text: "Se ha eliminado correctamente el Producto",
+                showConfirmButton: false,
+                timer: 2500
+            });
+        }
+    </script>
+    <script>
+        var actualizado = '@TempData["Actualizado"]';
+        //var mensaje = '@ViewBag.Mensaje';
+        if (actualizado) {
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: actualizado,
+                text: "Los cambios se han aplicado exitosamente",
+                showConfirmButton: false,
+                timer: 2500
+            });
+        }
+    </script>
+}

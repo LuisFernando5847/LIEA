@@ -1,0 +1,139 @@
+﻿@model LIEA_System.Models.Venta
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1 class="alert alert-secondary text-center">Nueva Venta</h1>
+<div class="float-lg-start">
+    <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
+</div>
+
+<h4 class="text-center">Venta ha realizar</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-12">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group col-md-4">
+                <label asp-for="Fecha_Venta" class="control-label"></label>
+                <input asp-for="Fecha_Venta" class="form-control" type="date" readonly />
+                <span asp-validation-for="Fecha_Venta" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="Hora_Venta" class="control-label"></label>
+                <input asp-for="Hora_Venta" class="form-control" type="time" readonly />
+                <span asp-validation-for="Hora_Venta" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="Id_Cliente" class="control-label"></label>
+                <select asp-for="Id_Cliente" class ="form-control" asp-items="ViewBag.Id_Cliente"></select>
+            </div>
+
+
+            <div class="col-md-12">
+                <div class="col-md-12"></div>
+                <h4 class="alert alert-dark text-center">Detalles de Venta</h4>
+                <div class="float-lg-start">
+                    <button type="submit" class="btn btn-outline-success">Vender</button>
+                </div>
+                <div class="float-lg-end">
+                    <button type="button" class="btn btn-outline-dark" onclick="addRow()">Agregar Producto</button>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="detallesVenta">
+                        <tr>
+                            <td>
+                                <select name="DetallesVenta[0].Id_Producto" class="form-control" onchange="updatePrice(this)">
+                                    <option value="">Seleccione un producto</option>
+                                    @foreach (var producto in ViewBag.Productos)
+                                    {
+                                        <option value="@producto.Id_Producto" data-price="@producto.Precio">@producto.Nombre</option>
+                                    }
+                                </select>
+                            </td>
+                            <td><input type="number" name="DetallesVenta[0].Cantidad" class="form-control cantidad" oninput="calculateTotal(this)" /></td>
+                            <td><input type="number" name="DetallesVenta[0].P_Unitario" class="form-control precio" readonly /></td>
+                            <td><input type="text" name="DetallesVenta[0].Total" class="form-control total" readonly /></td>
+                            <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Eliminar</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+
+
+
+            
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+@section Scripts {
+    <script type="text/javascript">
+        function calculateTotal(element) {
+            var row = element.closest('tr');
+            var cantidad = parseFloat(row.querySelector('.cantidad').value) || 0;
+            var precio = parseFloat(row.querySelector('.precio').value) || 0;
+            var total = cantidad * precio;
+            row.querySelector('.total').value = total.toFixed(2);
+        }
+
+        function updatePrice(selectElement) {
+            var row = selectElement.closest('tr');
+            var selectedOption = selectElement.selectedOptions[0];
+            var price = selectedOption.getAttribute('data-price');
+            row.querySelector('.precio').value = price;
+            calculateTotal(selectElement);
+        }
+
+        function addRow() {
+            var rowCount = $('#detallesVenta tr').length;
+            var newRow = `<tr>
+                        <td>
+                            <select name="DetallesVenta[${rowCount}].Id_Producto" class="form-control" onchange="updatePrice(this)">
+                                <option value="">Seleccione un producto</option>
+        @foreach (var producto in ViewBag.Productos)
+        {
+                                        <option value="@producto.Id_Producto" data-price="@producto.Precio">@producto.Nombre</option>
+        }
+                            </select>
+                        </td>
+                        <td><input type="number" name="DetallesVenta[${rowCount}].Cantidad" class="form-control cantidad" oninput="calculateTotal(this)" /></td>
+                        <td><input type="number" name="DetallesVenta[${rowCount}].P_Unitario" class="form-control precio" readonly /></td>
+                        <td><input type="text" name="DetallesVenta[${rowCount}].Total" class="form-control total" readonly /></td>
+                        <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Eliminar</button></td>
+                    </tr>`;
+            $('#detallesVenta').append(newRow);
+        }
+
+        function removeRow(button) {
+            $(button).closest('tr').remove();
+            updateTotals();
+        }
+
+        function updateTotals() {
+            $('#detallesVenta tr').each(function () {
+                calculateTotal(this.querySelector('.cantidad'));
+            });
+        }
+    </script>
+}
