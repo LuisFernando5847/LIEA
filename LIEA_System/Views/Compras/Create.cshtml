@@ -2,6 +2,9 @@
 
 @{
     ViewData["Title"] = "Create";
+
+    var horaFormateada = Model.Hora_Compra.ToString(@"hh\:mm\:ss");
+    var fechaFormateada = Model.Fecha_Compra.ToString(@"yyyy-MM-dd");
 }
 <h1 class="alert-secondary text-center">Comprar</h1>
 
@@ -20,12 +23,12 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group col-md-4">
                 <label asp-for="Fecha_Compra" class="control-label"></label>
-                <input asp-for="Fecha_Compra" class="form-control" type="date" readonly />
+                <input asp-for="Fecha_Compra" class="form-control" type="date" readonly value="@fechaFormateada" />
                 <span asp-validation-for="Fecha_Compra" class="text-danger"></span>
             </div>
             <div class="form-group col-md-4">
                 <label asp-for="Hora_Compra" class="control-label"></label>
-                <input asp-for="Hora_Compra" class="form-control" type="time" readonly />
+                <input asp-for="Hora_Compra" class="form-control" type="time" readonly value="@horaFormateada" />
                 <span asp-validation-for="Hora_Compra" class="text-danger"></span>
             </div>
             <div class="form-group col-md-4">

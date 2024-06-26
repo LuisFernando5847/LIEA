@@ -49,6 +49,7 @@ namespace LIEA_System.Controllers
         // GET: Compras/Create
         public IActionResult Create()
         {
+
             var compra = new Compra
             {
                 Fecha_Compra = DateTime.Now.Date,
@@ -83,6 +84,7 @@ namespace LIEA_System.Controllers
                     {
                         producto.Existencias += detalle.Cantidad;
                         _context.Productos.Update(producto);
+                        
                     }
                 }
 

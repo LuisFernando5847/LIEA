@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LIEA_System")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+20335cbe9970d59ad1f34a4d5e80d2f9d77e978e")]
 [assembly: System.Reflection.AssemblyProductAttribute("LIEA_System")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LIEA_System")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

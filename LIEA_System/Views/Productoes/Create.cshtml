@@ -27,12 +27,23 @@
             </div>
             <div class="form-group">
                 <label asp-for="Genero" class="control-label"></label>
-                <input asp-for="Genero" class="form-control" />
+                <select asp-for="Genero" class="form-control">
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                    <option value="I">No definido</option>
+                </select>
                 <span asp-validation-for="Genero" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Talla" class="control-label"></label>
-                <input asp-for="Talla" class="form-control" />
+                <select asp-for="Talla" class="form-control">
+                    <option value="XS">Mini</option>
+                    <option value="S">Chica</option>
+                    <option value="M">Mediana</option>
+                    <option value="L">Grande</option>
+                    <option value="XL">Extra Grande</option>
+                    <option value="XXL">Jumbo</option>
+                </select>
                 <span asp-validation-for="Talla" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -52,7 +63,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Existencias" class="control-label"></label>
-                <input asp-for="Existencias" class="form-control" />
+                <input asp-for="Existencias" class="form-control" type="number" />
                 <span asp-validation-for="Existencias" class="text-danger"></span>
             </div>
             <div class="form-group">

@@ -34,12 +34,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Telefono" class="control-label"></label>
-                <input asp-for="Telefono" class="form-control" />
+                <input asp-for="Telefono" class="form-control" type="tel" />
                 <span asp-validation-for="Telefono" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CorreoElectronico" class="control-label"></label>
-                <input asp-for="CorreoElectronico" class="form-control" />
+                <input asp-for="CorreoElectronico" class="form-control" type="email" />
                 <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
             </div>
             <div class="form-group float-lg-end">
@@ -53,4 +53,64 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+    <script>
+        $(document).ready(function () {
+            $.validator.addMethod("exactLength", function (value, element, param) {
+                return this.optional(element) || value.length == param;
+            }, "Por favor ingrese exactamente {0} caracteres.");
+
+            $("form").validate({
+                rules: {
+                    Nombre: {
+                        required: true,
+                        maxlength: 50,
+                        lettersonly: true
+                    },
+                    Apellido: {
+                        required: true,
+                        maxlength: 50,
+                        lettersonly: true
+                    },
+                    Domicilio: {
+                        required: true
+                    },
+                    CorreoElectronico: {
+                        required: true,
+                        email: true
+                    },
+                    Telefono: {
+                        required: true,
+                        number: true,
+                        exactLength: 10
+                    }
+                },
+                messages: {
+                    Nombre: {
+                        required: "El nombre es obligatorio",
+                        maxlength: "El nombre no puede tener más de 50 caracteres",
+                        lettersonly: "El nombre solo puede contener letras y espacios"
+                    },
+                    Apellido: {
+                        required: "El apellido es obligatorio",
+                        maxlength: "El apellido no puede tener más de 50 caracteres",
+                        lettersonly: "El apellido solo puede contener letras y espacios"
+                    },
+                    Domicilio: {
+                        required: "El Domicilio es obligatorio"
+                    },
+                    CorreoElectronico: {
+                        required: "El correo electrónico es obligatorio",
+                        email: "El correo electrónico no es válido"
+                    },
+                    Telefono: {
+                        required: "El teléfono es obligatorio",
+                        number: "El teléfono debe ser un número",
+                        exactLength: "El teléfono debe contener exactamente 10 números"
+                    }
+                }
+            });
+        });
+    </script>
 }
